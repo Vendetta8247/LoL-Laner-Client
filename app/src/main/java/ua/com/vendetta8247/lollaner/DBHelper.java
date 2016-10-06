@@ -14,12 +14,25 @@ import android.database.sqlite.SQLiteDatabase;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "LoLLaner.db";
+
+
     public static final String CHAMPIONS_TABLE_NAME = "champions";
     public static final String CHAMPIONS_COLUMN_ID = "id";
     public static final String CHAMPIONS_COLUMN_CHAMPION = "champion";
     public static final String CHAMPIONS_COLUMN_NAME = "name";
     public static final String CHAMPIONS_COLUMN_LOL_ID = "lolid";
-    private HashMap hp;
+
+    public static final String CREATE_CHAMPIONS_TABLE_REQUEST = "create table " + CHAMPIONS_TABLE_NAME +
+            " (" + CHAMPIONS_COLUMN_ID  + " integer primary key, " + CHAMPIONS_COLUMN_NAME +" text, " + CHAMPIONS_COLUMN_CHAMPION + " text, " + CHAMPIONS_COLUMN_LOL_ID + " text)";
+
+
+    public static final String SUMMONER_TABLE_NAME = "summoners";
+    public static final String SUMMONER_COLUMN_ID = "id";
+    public static final String SUMMONER_COLUMN_NAME = "name";
+    public static final String SUMMONER_COLUMN_LOL_ID = "lolid";
+
+    public static final String CREATE_SUMMONERS_TABLE_REQUEST = "create table " + SUMMONER_TABLE_NAME + " (" + SUMMONER_COLUMN_ID  + " integer primary key, " + SUMMONER_COLUMN_NAME +" text, " + SUMMONER_COLUMN_LOL_ID + " text)";
+
 
     public DBHelper(Context context)
     {
@@ -29,10 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
-        db.execSQL(
-                "create table " + CHAMPIONS_TABLE_NAME +
-                        " (" + CHAMPIONS_COLUMN_ID  + " integer primary key, " + CHAMPIONS_COLUMN_NAME +" text, " + CHAMPIONS_COLUMN_CHAMPION + " text, " + CHAMPIONS_COLUMN_LOL_ID + " text)"
-        );
+        db.execSQL(CREATE_CHAMPIONS_TABLE_REQUEST);
+        db.execSQL(CREATE_SUMMONERS_TABLE_REQUEST);
     }
 
     @Override
@@ -53,7 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getData(int id){
+    public Cursor getChampionById(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from champions where id="+id+"", null );
         return res;
@@ -114,4 +125,15 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return array_list;
     }
+
+    public boolean insertSummoner  (String name, String lolid)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("lolid", lolid);
+        db.insert("summoners", null, contentValues);
+        return true;
+    }
+
 }

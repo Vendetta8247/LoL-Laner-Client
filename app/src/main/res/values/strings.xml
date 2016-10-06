@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoL Laner</string>
+    <string name="title_activity_friend_list">FriendList</string>
+    <string name="action_settings">Settings</string>
 </resources>
