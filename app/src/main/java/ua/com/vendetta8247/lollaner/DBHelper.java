@@ -4,6 +4,8 @@ package ua.com.vendetta8247.lollaner;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -64,10 +66,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getChampionById(int id){
+    public ArrayList<String> getChampionById(int id){
+        ArrayList<String> array_list = new ArrayList<String>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from champions where id="+id+"", null );
-        return res;
+        Cursor res =  db.rawQuery( "select * from champions where lolid="+id+"", null );
+        res.moveToFirst();
+        System.out.println(res.getCount());
+
+        while(res.isAfterLast() == false){
+            array_list.add(res.getString(res.getColumnIndex(CHAMPIONS_COLUMN_CHAMPION)));
+            res.moveToNext();
+        }
+
+        return array_list;
     }
 
     public Cursor getChampionByName(String name)

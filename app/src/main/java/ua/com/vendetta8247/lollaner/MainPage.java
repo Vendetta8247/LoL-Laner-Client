@@ -38,12 +38,16 @@ public class MainPage extends AppCompatActivity {
     {
         JSONArray dataChampionGG;
         JSONObject dataRiot;
+        JSONObject currentGameData;
 
         @Override
         protected Void doInBackground(Void... params) {
             URL url;
 
             List<ImageView> summonerImages = new ArrayList<>();
+            List<JSONObject> team1, team2;
+            team1 = new ArrayList<>();
+            team2 = new ArrayList<>();
             try {
 // champion.gg data
                 url = new URL("http://api.champion.gg/champion?api_key=9500ef4bb169271b0763c3075be49d85");
@@ -57,7 +61,7 @@ public class MainPage extends AppCompatActivity {
 
                 dataChampionGG = new JSONArray(json.toString());
 
-//riot data
+//riot static data
 
                 url = new URL("https://global.api.pvp.net/api/lol/static-data/euw/v1.2/champion?api_key=RGAPI-75D59888-2CBE-4ADD-82AA-8774239BAA60");
                 connection = (HttpURLConnection)url.openConnection();
@@ -70,8 +74,47 @@ public class MainPage extends AppCompatActivity {
 
                 dataRiot = new JSONObject(json.toString());
 
+//current game data for OloloUpyachka
+
+                url = new URL("https://euw.api.pvp.net/observer-mode/rest/consumer/getSpectatorGameInfo/EUW1/19833633?api_key=RGAPI-75D59888-2CBE-4ADD-82AA-8774239BAA60");
+                connection = (HttpURLConnection)url.openConnection();
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                json = new StringBuffer(1024);
+                tmp="";
+                while((tmp=reader.readLine())!=null)
+                    json.append(tmp).append("\n");
+                reader.close();
 
 
+
+
+                currentGameData = new JSONObject(json.toString());
+
+                JSONArray participants = currentGameData.getJSONArray("participants");
+
+
+
+                for(int i = 0; i<participants.length(); i++)
+                {
+                    if (participants.getJSONObject(i).get("teamId").toString().equals("100")) {
+
+
+                        //String uri = "drawable/" + Champion.findNameByID(champions, Integer.parseInt(array.getJSONObject(i).get("championId").toString())).toLowerCase();
+                        //int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+                        //final Drawable image = getResources().getDrawable(imageResource);
+
+                        team1.add(participants.getJSONObject(i));
+
+
+
+                        //team1Text += array.getJSONObject(i).get("summonerName").toString() + " " + SummonerSpell.findNameByID(summonerSpells, Integer.parseInt(array.getJSONObject(i).get("spell1Id").toString())) + " " + SummonerSpell.findNameByID(summonerSpells, Integer.parseInt(array.getJSONObject(i).get("spell2Id").toString())) + "\n";
+                    }
+
+                    else
+                    {
+                        team2.add(participants.getJSONObject(i));
+                    }
+                }
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -96,13 +139,13 @@ public class MainPage extends AppCompatActivity {
                     String name = championData.getJSONObject(elem).get("name").toString();
                     String id = championData.getJSONObject(elem).get("id").toString();
                     mydb.insertContact(elem, name, id);
-                    System.out.println(elem + "  id  " + id);
+                 //  System.out.println(elem + "  id  " + id);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            for(String s :mydb.getAllCotacts())
-           tv.setText(tv.getText() + s + "\n");
+            //for(String s :mydb.getAllCotacts())
+           //tv.setText(tv.getText() + s + "\n");
 
 
         }
