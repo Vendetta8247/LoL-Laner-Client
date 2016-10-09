@@ -33,7 +33,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SUMMONER_COLUMN_NAME = "name";
     public static final String SUMMONER_COLUMN_LOL_ID = "lolid";
 
-    public static final String CREATE_SUMMONERS_TABLE_REQUEST = "create table " + SUMMONER_TABLE_NAME + " (" + SUMMONER_COLUMN_ID  + " integer primary key, " + SUMMONER_COLUMN_NAME +" text, " + SUMMONER_COLUMN_LOL_ID + " text)";
+    public static final String CREATE_SUMMONERS_TABLE_REQUEST = "create table " + SUMMONER_TABLE_NAME + " (" + SUMMONER_COLUMN_ID  + " integer primary key, " + SUMMONER_COLUMN_NAME +" text, " + SUMMONER_COLUMN_LOL_ID + " text, unique(" + SUMMONER_COLUMN_NAME +"))";
 
 
     public DBHelper(Context context)
@@ -119,19 +119,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] { Integer.toString(id) });
     }
 
-    public ArrayList<String> getAllCotacts()
+    public ArrayList<String> getAllSummoners()
     {
         ArrayList<String> array_list = new ArrayList<String>();
 
-        //hp = new HashMap();
+
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from champions order by name asc", null );
-       // Cursor c = db.query(CHAMPIONS_TABLE_NAME, null, null, null, null, null, CHAMPIONS_COLUMN_NAME + " ASC");
-       // c.moveToFirst();
+        Cursor res =  db.rawQuery( "select * from summoners order by name asc", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            array_list.add(res.getString(res.getColumnIndex(CHAMPIONS_COLUMN_CHAMPION)));
+
+            if(!res.isNull(res.getColumnIndex(SUMMONER_COLUMN_LOL_ID)))
+            array_list.add(res.getString(res.getColumnIndex(SUMMONER_COLUMN_NAME)));
             res.moveToNext();
         }
         return array_list;

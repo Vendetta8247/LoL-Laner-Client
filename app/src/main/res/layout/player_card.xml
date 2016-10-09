@@ -6,8 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
+
+    android:layout_marginRight="7dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginBottom="3dp"
+
     card_view:cardElevation="2dp"
-    card_view:cardBackgroundColor="#EEE">
+    card_view:cardBackgroundColor="#eee">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,9 +25,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/profile_icon"
-                android:src="@drawable/braum"
+                android:src="@drawable/akali"
                 android:adjustViewBounds="true"
-                android:layout_margin="15dp"
+                android:layout_margin="8dp"
                 android:maxHeight="40dp"
                 android:maxWidth="40dp"
                 android:scaleType="fitCenter"
@@ -34,10 +40,10 @@
         android:id="@+id/summoner_name"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingTop="15dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="15dp"
-        android:textSize="10pt"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="9pt"
         android:text="OloloUpyachka"/>
 
 
