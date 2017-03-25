@@ -3,9 +3,32 @@
 
 
     <color name="colorPrimary">#2e3136</color>
-    <color name="colorPrimaryDark">#1e2124</color>
+    <color name="colorPrimaryDark">#010a14</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#5fd97a</color>
+    <color name="colorAccent">#eae0cd</color>
+
+    <color name="blackMain">#010a14</color>
+    <color name="blackSec1">#020911</color>
+    <color name="blackSec2">#0B3546</color>
+
+    <color name="blueMain">#09bcd5</color>
+    <color name="blueSec1">#5de0e0</color>
+    <color name="blueSec2">#0795ac</color>
+    <color name="blueOutline">#0ac5e1</color>
+
+    <color name="goldMain">#a67e33</color>
+    <color name="goldSec1">#a88030</color>
+    <color name="goldSec2">#98732e</color>
+    <color name="goldSec3">#785a28</color>
+
+    <color name="whiteMain">#f0e6d2</color>
+    <color name="whiteSec">#eae0cd</color>
+    <color name="whiteStats">#aaeae0cd</color>
+
+    <color name="greenMain">#09a646</color>
+    <color name="greenOutline">#66f8a0</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>
