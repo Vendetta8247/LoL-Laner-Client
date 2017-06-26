@@ -1,49 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:clickable="true"
     android:background="@drawable/background_gradient"
     android:orientation="vertical"
-    android:paddingTop="7dp"
+    android:padding="7dp"
     >
+    <ImageView
+        android:id="@+id/drawer_button"
+        android:tint="@color/textColorPrimary"
+        android:layout_marginTop="6dp"
+        android:src="@mipmap/drawer"
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
     <TextView
-        android:layout_width="match_parent"
+        android:layout_toRightOf="@id/drawer_button"
+        android:id="@+id/friendsHeader"
+        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/whiteSec"
-        android:textSize="24sp"
-        android:background="@drawable/header_item"
-        android:padding="5dp"
-        android:text="My summoner"/>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recViewMySummoner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
-
-
-
-
-    <TextView
-        android:layout_marginTop="2dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/whiteSec"
-        android:textSize="24sp"
-        android:background="@drawable/header_item"
-        android:padding="5dp"
+        android:textColor="@color/textColorPrimary"
+        android:layout_marginLeft="15dp"
+        android:textSize="22sp"
         android:text="Friends"/>
 
+    <ImageView
+        android:id="@+id/addfriendButton"
+        android:layout_alignTop="@id/drawer_button"
+        android:src="@mipmap/addfriend"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textColor="@color/whiteSec"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end|center_vertical"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:paddingRight="15dp"
+        />
+
 <android.support.v7.widget.RecyclerView
+    android:layout_below="@+id/friendsHeader"
+    android:layout_marginTop="15dp"
     android:id="@+id/recViewFriends"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/left_drawer"
+        android:layout_width="280dp"
+        android:clickable="true"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="#111">
+        <ImageView
+            android:id="@+id/headerImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:alpha="0.3"
+            android:layout_alignParentTop="true"
+            android:src="@mipmap/patch"/>
+        <ImageView
+            android:id="@+id/mySummonerIcon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBottom="@+id/headerImage"
+            android:layout_margin="15dp"
+            android:src="@drawable/ahri"/>
+        <TextView
+            android:id="@+id/mySummonerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/mySummonerIcon"
+            android:layout_marginBottom="25dp"
+            android:layout_toRightOf="@+id/mySummonerIcon"
+            android:textSize="18sp"
+            android:textColor="@color/whiteMain"
+            android:text="Summoner"/>
+        <TextView
+            android:id="@+id/currentlyPlaying"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/mySummonerIcon"
+            android:layout_toRightOf="@+id/mySummonerIcon"
+            android:textSize="18sp"
+            android:textColor="@color/blueMain"
+            android:text="Currently playing"/>
+
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

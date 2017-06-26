@@ -2,6 +2,8 @@ package ua.com.vendetta8247.lollaner;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -98,10 +100,9 @@ public class ConstructorActivity extends AppCompatActivity {
 
             Resources resources = getResources();
             System.out.println("image view = " + secondChampionImage + " key = " + data.getStringExtra("key").toLowerCase());
-            int resourceId = resources.getIdentifier(data.getStringExtra("key").toLowerCase(), "drawable",
-                    getPackageName());
 
-            secondChampionImage.setImageDrawable(getResources().getDrawable(resourceId));
+            Drawable image = Drawable.createFromPath(getFilesDir() + "/" + data.getStringExtra("imageUrl").toLowerCase());
+            secondChampionImage.setImageDrawable(image);
             System.out.println(data.getStringExtra("key"));
         }
     }

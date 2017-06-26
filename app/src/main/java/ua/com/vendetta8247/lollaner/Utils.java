@@ -1,5 +1,6 @@
 package ua.com.vendetta8247.lollaner;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,6 +15,8 @@ import android.graphics.RectF;
  */
 
 public class Utils {
+
+    public static final String SITENAME = "https://pure-bayou-47311.herokuapp.com";
 
     public static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
@@ -72,6 +75,14 @@ public class Utils {
         canvas.drawBitmap(srcBitmap, borderWidth / 2, borderWidth / 2, null);
         srcBitmap.recycle();
         return dstBitmap;
+    }
+
+    public static int getDrawableIdByName(String name, Context context)
+    {
+        Resources resources = context.getResources();
+        final int resourceId = resources.getIdentifier(name, "drawable",
+                context.getPackageName());
+        return resourceId;
     }
 
 }

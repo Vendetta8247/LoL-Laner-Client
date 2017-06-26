@@ -31,4 +31,7 @@
     <color name="greenOutline">#66f8a0</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <color name="test1">#5dcc6c</color>
+    <color name="test2">#f24343</color>
 </resources>

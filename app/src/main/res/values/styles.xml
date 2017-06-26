@@ -31,7 +31,7 @@
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">#06202D</item>
-        <item name = "colorAccent">@color/whiteMain</item>
+        <item name="colorAccent">@color/whiteMain</item>
     </style>
 
     <style name="FullscreenTheme" parent="MyMaterialTheme">
@@ -56,5 +56,9 @@
         <!-- цвет дорожки для неактивного состояния (30% прозрачности) -->
         <item name="android:colorForeground">@android:color/darker_gray</item>
     </style>
+
+    <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

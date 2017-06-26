@@ -6,11 +6,15 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,11 +33,14 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +49,17 @@ import javax.net.ssl.HttpsURLConnection;
 public class FriendListActivity extends AppCompatActivity {
 
     SharedPreferences prefs = null;
-    RecyclerView recyclerViewMySummoner, recyclerViewFriends;
-    FriendListAdapter mySummonerAdapter, friendsAdapter;
+    RecyclerView recyclerViewFriends;
+    FriendListAdapter friendsAdapter;
+    ImageView mySummonerIcon;
+    TextView mySummonerName, currentlyPlaying;
+    TextView friendsHeader;
+
+    ImageView drawerButton;
+    ImageView addFriendButton;
+    DrawerLayout drawer;
+
+    StaticDataLoader dataLoader;
 
     DBHelper database;
 
@@ -53,41 +69,140 @@ public class FriendListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_list);
         database = new DBHelper(this);
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerButton = (ImageView) findViewById(R.id.drawer_button);
+
+        mySummonerIcon = (ImageView) findViewById(R.id.mySummonerIcon);
+        mySummonerName = (TextView) findViewById(R.id.mySummonerName);
+        currentlyPlaying = (TextView) findViewById(R.id.currentlyPlaying);
+
+        friendsHeader = (TextView) findViewById(R.id.friendsHeader);
+
+        addFriendButton = (ImageView) findViewById(R.id.addfriendButton);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CurrentGameActivity.class);
+                Cursor mySummoner = database.getMySummoner();
+                System.out.println("MY SUMMONER COUNT " + mySummoner.getCount());
+                mySummoner.moveToFirst();
+                intent.putExtra("summonerId", mySummoner.getString(mySummoner.getColumnIndex("id")));
+                startActivity(intent);
+            }
+        };
+
+        mySummonerName.setOnClickListener(listener);
+        mySummonerIcon.setOnClickListener(listener);
+        currentlyPlaying.setOnClickListener(listener);
+
+        addFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme);
+                builder.setTitle( Html.fromHtml("<font color='#f0e6d2'>Summoner name</font>"));
+                final LinearLayout ll = new LinearLayout(v.getContext());
+                ll.setOrientation(LinearLayout.VERTICAL);
+                final EditText input = new EditText(v.getContext());
+                TableLayout.LayoutParams params = new TableLayout.LayoutParams();
+                params.setMargins(50, 45, 50, 25);
+                input.setLayoutParams(params);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setTextColor(0xffeae0cd);
+                ll.addView(input);
+                builder.setView(ll);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            new AsyncSummonerInfoLoader(URLEncoder.encode(input.getText().toString(), "UTF-8").replace("+", "%20"), false).execute();
+                            System.out.println(URLEncoder.encode(input.getText().toString(), "UTF-8").replace("+", "%20"));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+        });
+
+        Typeface beaufort = Typeface.createFromAsset(getAssets(), "beaufortforlol-bold.otf");
+        friendsHeader.setTypeface(beaufort);
+
+        dataLoader = new StaticDataLoader();
+
         prefs = getSharedPreferences("ua.com.vendetta8247.lollaner", MODE_PRIVATE);
 
         if (prefs.getBoolean("firstrun", true)) {
             System.out.println("FIRST RUN!!!");
-            new StaticDataLoader(database).execute();
             prefs.edit().putBoolean("firstrun", false).commit();
         }
+        dataLoader.loadVersion(prefs, database, getApplicationContext());
 
 
+        System.out.println("version = " +  prefs.getString("version", "0"));
 
-        recyclerViewMySummoner = (RecyclerView) findViewById(R.id.recViewMySummoner);
+
         recyclerViewFriends = (RecyclerView) findViewById(R.id.recViewFriends);
 
-        mySummonerAdapter = new FriendListAdapter();
-        recyclerViewMySummoner.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewMySummoner.setAdapter(mySummonerAdapter);
-        mySummonerAdapter.addCard(new FriendListCard(getResources().getDrawable(R.drawable.plus), "Add Summoner", 0));
+        drawerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(GravityCompat.START);
+            }
+        });
 
         friendsAdapter = new FriendListAdapter();
         recyclerViewFriends.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewFriends.setAdapter(friendsAdapter);
-        friendsAdapter.addCard(new FriendListCard(getResources().getDrawable(R.drawable.plus), "Add Summoner", 0));
 
-        Cursor mySummoner = database.getMySummoner();
-        System.out.println("MY SUMMONER COUNT " + mySummoner.getCount());
-        if(mySummoner.getCount() > 0)
-        {
-            mySummoner.moveToFirst();
-            mySummonerAdapter.editCard(0,new FriendListCard(getResources().getDrawable(R.drawable.aatrox), mySummoner.getString(mySummoner.getColumnIndex("name")), 1));
-            new AsyncGameChecker(mySummoner.getString(mySummoner.getColumnIndex("id"))).execute();
+        Cursor summoners = database.getAllSummoners();
+        System.out.println("SUMMONERS COUNT + " + summoners.getCount());
+        if(summoners.getCount()>0) {
+            summoners.moveToFirst();
+            while (true) {
+
+                Bitmap imageBitmap= BitmapFactory.decodeFile(getApplicationContext().getFilesDir() + "/" + summoners.getString(summoners.getColumnIndex("icon")) + ".png");
+                Bitmap croppedBitmap=Bitmap.createBitmap(imageBitmap,0,0,128,128);
+
+                Bitmap end = Utils.getRoundedCornerBitmap(croppedBitmap, 5000);
+                end = Utils.addBorderToRoundedBitmap(end, 5000, 5, 0xffb99f42);
+
+
+
+                RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(), end);
+
+                roundedBitmapDrawable.setCornerRadius(5000.0f);
+                roundedBitmapDrawable.setAntiAlias(true);
+
+                friendsAdapter.addCard(new FriendListCard(roundedBitmapDrawable, summoners.getString(summoners.getColumnIndex("name"))));
+                friendsAdapter.notifyDataSetChanged();
+                System.out.println(summoners.getString(summoners.getColumnIndex("name")) + "  " + summoners.getInt(summoners.getColumnIndex("status")));
+
+                if(summoners.isLast())
+                    break;
+                else
+                summoners.moveToNext();
+            }
         }
+        Cursor mySummoner = database.getMySummoner();
+        mySummoner.moveToFirst();
+        if(mySummoner.getCount()>0)
+        mySummonerName.setText(mySummoner.getString(summoners.getColumnIndex("name")));
+
     }
 
 
-    class FriendListAdapter extends RecyclerView.Adapter<FriendListViewHolder>
+    class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.FriendListViewHolder>
     {
         List<FriendListCard> cardList;
 
@@ -104,9 +219,15 @@ public class FriendListActivity extends AppCompatActivity {
 
         public void editCard(int position, FriendListCard card)
         {
-            cardList.get(position).status = card.status;
             cardList.get(position).image = card.image;
             cardList.get(position).summonerName = card.summonerName;
+        }
+
+        public void removeAt(int position) {
+
+            cardList.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, getItemCount());
         }
 
         @Override
@@ -123,106 +244,115 @@ public class FriendListActivity extends AppCompatActivity {
 
             holder.summonerName.setText(card.summonerName);
             holder.summonerImage.setImageDrawable(card.image);
-
-            holder.status = card.status;
-
+            holder.summonerNameString = card.summonerName;
         }
 
         @Override
         public int getItemCount() {
             return cardList.size();
         }
-    }
 
-    class FriendListViewHolder extends RecyclerView.ViewHolder
-    {
-        protected ImageView summonerImage;
-        protected TextView summonerName;
 
-        int status;
+        class FriendListViewHolder extends RecyclerView.ViewHolder
+        {
+            protected ImageView summonerImage;
+            protected TextView summonerName;
+            protected String summonerNameString;
 
-        public FriendListViewHolder(View itemView) {
-            super(itemView);
-            summonerImage = (ImageView) itemView.findViewById(R.id.summonerIcon);
-            summonerName = (TextView) itemView.findViewById(R.id.summonerName);
+            int status;
 
+            public FriendListViewHolder(final View itemView) {
+                super(itemView);
+                summonerImage = (ImageView) itemView.findViewById(R.id.summonerIcon);
+                summonerName = (TextView) itemView.findViewById(R.id.summonerName);
+                System.out.println("STATUS ON CONSTRUCTOR " + status);
+
+                ImageView edit = (ImageView) itemView.findViewById(R.id.buttonEdit);
+                edit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme);
+                        builder.setTitle( Html.fromHtml("<font color='#f0e6d2'>Summoner name</font>"));
+                        final LinearLayout ll = new LinearLayout(v.getContext());
+                        ll.setOrientation(LinearLayout.VERTICAL);
+                        final EditText input = new EditText(v.getContext());
+
+                        TableLayout.LayoutParams params = new TableLayout.LayoutParams();
+                        params.setMargins(50, 45, 50, 25);
+                        input.setLayoutParams(params);
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        input.setTextColor(0xffeae0cd);
+                        ll.addView(input);
+                        builder.setView(ll);
+
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new AsyncSummonerInfoLoader(input.getText().toString(), false).execute();
+
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder.show();
+
+                    }
+                });
+
+                ImageView delete = (ImageView) itemView.findViewById(R.id.buttonDelete);
+                delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        removeAt(getAdapterPosition());
+                    }
+                });
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (status == 0)
-                        {
-                            //int inputSelection = 0;
-                            //final CharSequence[] items = { " HDMI IN ", " AV IN" };
-                            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext(), R.style.MyDialogTheme);
-                            builder.setTitle( Html.fromHtml("<font color='#f0e6d2'>Summoner name</font>"));
-
-//                            builder.setSingleChoiceItems(items,inputSelection,
-//                                    new DialogInterface.OnClickListener() {
-//                                        public void onClick(DialogInterface dialog, int item) {
-//                                            //inputSelection = item;
-//                                        }
-//                                    });
-//
-
-                            final LinearLayout ll = new LinearLayout(v.getContext());
-                            ll.setOrientation(LinearLayout.VERTICAL);
-                            final EditText input = new EditText(v.getContext());
-
-                            TableLayout.LayoutParams params = new TableLayout.LayoutParams();
-                            params.setMargins(50, 45, 50, 25);
-                            input.setLayoutParams(params);
-                            input.setInputType(InputType.TYPE_CLASS_TEXT);
-                            input.setTextColor(0xffeae0cd);
-                            ll.addView(input);
-                            builder.setView(ll);
-
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    new AsyncSummonerInfoLoader(input.getText().toString(),0).execute();
-
-                                }
-                            });
-                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                            builder.show();
-                        }
-                        else if (status == 1) {
                             Intent intent = new Intent(v.getContext(), CurrentGameActivity.class);
-                            Cursor mySummoner = database.getMySummoner();
-                            System.out.println("MY SUMMONER COUNT " + mySummoner.getCount());
-                                mySummoner.moveToFirst();
-                            intent.putExtra("summonerId", mySummoner.getString(mySummoner.getColumnIndex("id")));
-                            startActivity(intent);
+                            Cursor summoner = database.getSummonerByName(summonerNameString);
+                            System.out.println("MY SUMMONER COUNT " + summoner.getCount());
+                            summoner.moveToFirst();
+                            intent.putExtra("summonerId", summoner.getString(summoner.getColumnIndex("id")));
+                        long lastUpdated = summoner.getLong(summoner.getColumnIndex("lastedited"));
+                        long unixTime = System.currentTimeMillis() / 1000L;
+                        if(unixTime-lastUpdated>60) {
+                            new AsyncSummonerInfoLoader(summoner.getString(summoner.getColumnIndex(DBHelper.SUMMONER_COLUMN_NAME)), true).execute();
+
                         }
-                        else
-                        {
-                            Intent intent = new Intent(v.getContext(), CurrentGameActivity.class);
+                        System.out.println("DIFF" + (unixTime-lastUpdated));
+                        System.out.println(lastUpdated);
                             startActivity(intent);
-                        }
                     }
                 });
+            }
         }
     }
 
+
+
     class AsyncSummonerInfoLoader extends AsyncTask<Void, Void, Void>
     {
+        boolean force = false;
         String summonerName;
         boolean dataCorrect = false;
         JSONObject data;
         String nameToShow="", idToShow="";
-        int status = -1;
+        long lastEdited;
+        int icon;
+        int accId;
 
-        public AsyncSummonerInfoLoader(String summonerName, int status)
+        public AsyncSummonerInfoLoader(String summonerName, boolean force)
         {
             this.summonerName = summonerName;
-            this.status = status;
+            this.force = force;
         }
 
 
@@ -230,7 +360,11 @@ public class FriendListActivity extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
 
             try {
-                URL url = new URL(CurrentGameActivity.SITENAME + "/summoner/by-name/" + summonerName);
+                URL url;
+                if(force)
+                url = new URL(CurrentGameActivity.SITENAME + "/summoner/by-name/" + summonerName + "/?force=true");
+                else
+                    url = new URL(CurrentGameActivity.SITENAME + "/summoner/by-name/" + summonerName);
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuffer json = new StringBuffer(1024);
@@ -246,6 +380,9 @@ public class FriendListActivity extends AppCompatActivity {
                 }
                 nameToShow = data.getString("name");
                 idToShow = data.getString("id");
+                icon = data.getInt("icon");
+                accId = data.getInt("accountid");
+                lastEdited = data.getLong("lastedited");
                 dataCorrect = true;
 
             }
@@ -255,6 +392,7 @@ public class FriendListActivity extends AppCompatActivity {
             }
             catch(JSONException ex)
             {
+                ex.printStackTrace();
                 dataCorrect = false;
             }
 
@@ -266,29 +404,30 @@ public class FriendListActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             if(dataCorrect) {
-                if (status == 0) {
+                Bitmap imageBitmap= BitmapFactory.decodeFile(getApplicationContext().getFilesDir() + "/" + icon + ".png");
+                Bitmap croppedBitmap=Bitmap.createBitmap(imageBitmap,0,0,128,128);
 
-
-                    Bitmap imageBitmap= BitmapFactory.decodeResource(getResources(),  R.drawable.ahri);
-                    Bitmap croppedBitmap=Bitmap.createBitmap(imageBitmap,25,25,310,310);
-
-                    Bitmap end = Utils.getRoundedCornerBitmap(croppedBitmap, 5000);
-                    end = Utils.addBorderToRoundedBitmap(end, 5000, 15, 0xffb99f42);
+                Bitmap end = Utils.getRoundedCornerBitmap(croppedBitmap, 5000);
+                end = Utils.addBorderToRoundedBitmap(end, 5000, 5, 0xffb99f42);
 
 
 
-                    RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(), end);
+                RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(), end);
 
-                    roundedBitmapDrawable.setCornerRadius(5000.0f);
-                    roundedBitmapDrawable.setAntiAlias(true);
-                    //profilePic.setImageBitmap(end);
+                roundedBitmapDrawable.setCornerRadius(5000.0f);
+                roundedBitmapDrawable.setAntiAlias(true);
+                //profilePic.setImageBitmap(end);
 
-                    Drawable d = roundedBitmapDrawable;
-                    mySummonerAdapter.editCard(0, new FriendListCard(d, nameToShow, 1));
-                    database.insertSummoner(nameToShow, idToShow, 1);
-                    mySummonerAdapter.notifyDataSetChanged();
-                } else
-                    friendsAdapter.editCard(0, new FriendListCard(getResources().getDrawable(R.drawable.jhin), nameToShow, 2));
+                Drawable d = roundedBitmapDrawable;
+
+                if(!force)
+
+                {
+                    friendsAdapter.addCard(new FriendListCard(d, nameToShow));
+                    friendsAdapter.notifyDataSetChanged();
+                }
+                    database.insertSummoner(nameToShow, idToShow, 2, accId, icon, lastEdited);
+
             }
             else
                 System.out.println("DATA INCORRECT 2");

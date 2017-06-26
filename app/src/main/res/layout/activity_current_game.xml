@@ -176,12 +176,6 @@
                                         android:layout_height="wrap_content" />
 
                                     <TextView
-                                        android:id="@+id/advancedStats1totalDamageTaken"
-                                        android:text="GOLD"
-                                        android:textColor="@color/whiteSec"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" />
-                                    <TextView
                                         android:id="@+id/advancedStats1maxChampionsKilled"
                                         android:text="TURRETS"
                                         android:textColor="@color/whiteSec"
@@ -276,12 +270,6 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:orientation="vertical">
-                            <ImageView
-                                android:adjustViewBounds="true"
-                                android:id="@+id/champion11"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
                             <TextView
                                 android:id="@+id/division11"
                                 android:textSize="11sp"
@@ -291,6 +279,43 @@
                                 android:gravity="center"
                                 android:background="@drawable/gold_elo_outline"
                                 />
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:id="@+id/champion11"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell111"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell112"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone11"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -299,12 +324,6 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:orientation="vertical">
-                            <ImageView
-                                android:adjustViewBounds="true"
-                                android:id="@+id/champion12"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
                             <TextView
                                 android:id="@+id/division12"
                                 android:textSize="11sp"
@@ -313,6 +332,42 @@
                                 android:text="PLAT IV"
                                 android:gravity="center"
                                 android:background="@drawable/plat_elo_outline"/>
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:id="@+id/champion12"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell121"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell122"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone12"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -321,12 +376,6 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:orientation="vertical">
-                            <ImageView
-                                android:adjustViewBounds="true"
-                                android:id="@+id/champion13"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
                             <TextView
                                 android:id="@+id/division13"
                                 android:textSize="11sp"
@@ -335,6 +384,42 @@
                                 android:text="DIA III"
                                 android:gravity="center"
                                 android:background="@drawable/dia_elo_outline"/>
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:id="@+id/champion13"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/summonerSpell131"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell132"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone13"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -343,12 +428,6 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:orientation="vertical">
-                            <ImageView
-                                android:adjustViewBounds="true"
-                                android:id="@+id/champion14"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
                             <TextView
                                 android:id="@+id/division14"
                                 android:textSize="11sp"
@@ -357,6 +436,42 @@
                                 android:text="SILV II"
                                 android:gravity="center"
                                 android:background="@drawable/silver_elo_outline"/>
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:id="@+id/champion14"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell141"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell142"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone14"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -365,12 +480,6 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:orientation="vertical">
-                            <ImageView
-                                android:adjustViewBounds="true"
-                                android:id="@+id/champion15"
-                                android:layout_height="wrap_content"
-                                android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
                             <TextView
                                 android:id="@+id/division15"
                                 android:textSize="11sp"
@@ -379,6 +488,41 @@
                                 android:text="GOLD I"
                                 android:gravity="center"
                                 android:background="@drawable/gold_elo_outline"/>
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:id="@+id/champion15"
+                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell151"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell152"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone15"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -419,13 +563,43 @@
                                 android:gravity="center"
                                 android:background="@drawable/gold_elo_outline"
                                 />
-
                             <ImageView
                                 android:adjustViewBounds="true"
                                 android:id="@+id/champion21"
                                 android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell211"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell212"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone21"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
+
+
 
                         </LinearLayout>
 
@@ -444,14 +618,41 @@
                                 android:text="GOLD IV"
                                 android:gravity="center"
                                 android:background="#ccc"/>
-
                             <ImageView
                                 android:adjustViewBounds="true"
                                 android:id="@+id/champion22"
                                 android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
-
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell221"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell222"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone22"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -469,13 +670,43 @@
                                 android:text="GOLD III"
                                 android:gravity="center"
                                 android:background="#ccc"/>
-
                             <ImageView
                                 android:adjustViewBounds="true"
                                 android:id="@+id/champion23"
                                 android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell231"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell232"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone23"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
+
+
 
                         </LinearLayout>
 
@@ -500,8 +731,38 @@
                                 android:adjustViewBounds="true"
                                 android:id="@+id/champion24"
                                 android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell241"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell242"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone24"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -521,12 +782,42 @@
                                 android:gravity="center"
                                 android:background="#ccc"/>
 
+
                             <ImageView
                                 android:adjustViewBounds="true"
                                 android:id="@+id/champion25"
                                 android:layout_height="wrap_content"
+                                android:layout_width="match_parent"/>
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:src="@drawable/jhin"/>
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_black_alpha"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/summonerSpell251"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/flash"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerSpell252"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/heal"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                                <ImageView
+                                    android:id="@+id/summonerKeystone25"
+                                    android:layout_margin="3dp"
+                                    android:layout_width="0dp"
+                                    android:src="@drawable/fervor"
+                                    android:adjustViewBounds="true"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -609,12 +900,6 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" />
 
-                                    <TextView
-                                        android:id="@+id/advancedStats2totalDamageTaken"
-                                        android:text="GOLD"
-                                        android:textColor="@color/whiteSec"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" />
                                     <TextView
                                         android:id="@+id/advancedStats2maxChampionsKilled"
                                         android:text="TURRETS"
@@ -716,7 +1001,7 @@
                         android:layout_height="48dp"
                         android:id="@+id/compareButton"
                         android:text="Compare"
-                        android:textColor="@color/textColorPrimary"
+                        android:textColor="#999"
                         android:padding="10dp"
                         android:gravity="center"
                         android:textSize="24sp"/>
@@ -755,7 +1040,7 @@
 
     <RelativeLayout
         android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="280dp"
         android:clickable="true"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -768,8 +1053,9 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
+            android:alpha="0.5"
             android:layout_alignParentTop="true"
-            android:src="@mipmap/assassin_transp_radial2"/>
+            android:src="@mipmap/patch"/>
         </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
 
