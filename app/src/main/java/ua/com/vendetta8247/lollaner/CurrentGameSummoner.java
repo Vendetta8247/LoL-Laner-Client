@@ -9,6 +9,7 @@ public class CurrentGameSummoner {
     int summonerId;
     int championId;
     int summonerSpellId1, summonerSpellId2;
+    int keystone;
     int teamId;
     String flexDivision, flexTier;
     String soloDivision, soloTier;
@@ -28,7 +29,7 @@ public class CurrentGameSummoner {
 
 
 
-    public CurrentGameSummoner(String summonerName, int summonerId, int championId, int summonerSpellId1, int summonerSpellId2, int teamId
+    public CurrentGameSummoner(String summonerName, int summonerId, int championId, int summonerSpellId1, int summonerSpellId2, int keystone, int teamId
             ,String flexDivision, String flexTier, String soloDivision, String soloTier
     )
     {
@@ -37,6 +38,7 @@ public class CurrentGameSummoner {
         this.championId = championId;
         this.summonerSpellId1 = summonerSpellId1;
         this.summonerSpellId2 = summonerSpellId2;
+        this.keystone = keystone;
         this.teamId = teamId;
         this.flexDivision = flexDivision;
         this.flexTier = flexTier;

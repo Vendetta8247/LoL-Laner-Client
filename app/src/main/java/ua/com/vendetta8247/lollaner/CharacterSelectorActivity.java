@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +36,12 @@ public class CharacterSelectorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int scrnWidth = size.x;
+        int scrnHeight = size.y;
 
         setContentView(R.layout.activity_character_selector);
         int counter = 0;
@@ -62,26 +72,34 @@ public class CharacterSelectorActivity extends AppCompatActivity {
             final String key = champions.getString(champions.getColumnIndex("key"));
             final String title = champions.getString(champions.getColumnIndex("title"));
             final String tags = champions.getString(champions.getColumnIndex("tags"));
+            final String url = champions.getString(champions.getColumnIndex("imageurl"));
 
-            final String ad = String.format("%.0f",champions.getFloat(champions.getColumnIndex("ad")));
+            final String ad = String.format("%.0f",champions.getFloat(champions.getColumnIndex("attackdamage")));
             final String ap = new String("0");
             final String armor = String.format("%.0f",champions.getFloat(champions.getColumnIndex("armor")));
-            final String mr = String.format("%.0f",champions.getFloat(champions.getColumnIndex("mr")));
+            final String mr = String.format("%.0f",champions.getFloat(champions.getColumnIndex("spellblock")));
             final String crit = String.format("%.0f",champions.getFloat(champions.getColumnIndex("crit")));
-            final String as = String.format("%.3f",0.625f / (1 + champions.getFloat(champions.getColumnIndex("asoffset"))));
+            final String as = String.format("%.3f",0.625f / (1 + champions.getFloat(champions.getColumnIndex("attackspeedoffset"))));
             final String cdr = "0";
-            final String ms = String.format("%.0f",champions.getFloat(champions.getColumnIndex("ms")));
+            final String ms = String.format("%.0f",champions.getFloat(champions.getColumnIndex("movespeed")));
 
             //
             ImageView img = new ImageView(this);
-           // LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
-            //img.setLayoutParams(params2);
+
             Resources resources = getResources();
             System.out.println(champions.getString(champions.getColumnIndex("key")).toLowerCase());
-            int resourceId = resources.getIdentifier(champions.getString(champions.getColumnIndex("key")).toLowerCase(), "drawable",
-                    getPackageName());
-            img.setImageDrawable(getResources().getDrawable(resourceId));
 
+            Drawable image = Drawable.createFromPath(getFilesDir() + "/" + champions.getString(champions.getColumnIndex("imageurl")).toLowerCase());
+
+            //image = new ScaleDrawable(image, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight()).getDrawable();
+
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+            layoutParams.height = scrnWidth/counterCap-10;
+            layoutParams.width = scrnWidth/counterCap-10;
+            img.setImageDrawable(image);
+
+            img.setLayoutParams(layoutParams);
             img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,6 +116,7 @@ public class CharacterSelectorActivity extends AppCompatActivity {
                     intent.putExtra("textViewAS", as);
                     intent.putExtra("textViewCDR", cdr);
                     intent.putExtra("textViewMS", ms);
+                    intent.putExtra("imageUrl", url);
 
                     setResult(RESULT_OK,intent);
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
@@ -113,11 +132,11 @@ public class CharacterSelectorActivity extends AppCompatActivity {
             TextView tv = new TextView(this);
             tv.setGravity(Gravity.CENTER);
             tv.setTextColor(getResources().getColor(R.color.whiteMain));
-            tv.setText(champions.getString(champions.getColumnIndex("key")));
+            tv.setText(champions.getString(champions.getColumnIndex("name")));
             //
 
             LinearLayout ll = new LinearLayout(this);
-            TableRow.LayoutParams params1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+            TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
             ll.setLayoutParams(params1);
             ll.setOrientation(LinearLayout.VERTICAL);
             ll.setPadding(5,5,5,5);
@@ -130,18 +149,4 @@ public class CharacterSelectorActivity extends AppCompatActivity {
         }
 
     }
-
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//
-//        // Checks the orientation of the screen
-//        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            counterCap = 6;
-//        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-//            counterCap = 4;
-//            ScrollView a = new ScrollView(this);
-//        }
-//        recreate();
-//    }
-
 }

@@ -8,12 +8,10 @@ public class FriendListCard
 {
     public Drawable image;
     public String summonerName;
-    int status;
 
-    public FriendListCard(Drawable image, String summonerName, int status)
+    public FriendListCard(Drawable image, String summonerName)
     {
         this.image = image;
         this.summonerName = summonerName;
-        this.status = status;
     }
 }

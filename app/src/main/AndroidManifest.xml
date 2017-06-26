@@ -12,20 +12,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
-        <activity android:name=".ConstructorActivity"></activity>
+        <activity android:name=".ConstructorActivity" />
         <activity
             android:name=".CharacterSelectorActivity"
             android:label="@string/title_activity_character_selector"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".CurrentGameActivity">
-
-        </activity>
+        <activity
+            android:name=".CurrentGameActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity android:name=".FriendListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".StartActivity">
+
         </activity>
     </application>
 
